@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ja">
+<head>
+    <title>カクテルあぷり</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+</head>
+
+<body>
+
+<h1>カクテルあぷり</h1>
+
+<nav class="navbar  navbar-inverse">
+  <div class="container">
+  <ul class="nav navbar-nav">
+  <li class="active"><a href="{% url 'top:top' %}">HOME</a></li>
+  <li><a href="{% url 'top:search' %}">Search</a></li>
+  <li><a href="{% url 'top:request' %}">Request</a></li>
+  <li><a href="{% url 'top:registration' %}">Registration</a></li>
+  </ul>
+  <form class="navbar-form navbar-right"  role="search">
+  <div  class="form-group">
+  <input  type="text" class="form-control"  placeholder="Search">
+  </div>
+  <button  type="submit" class="btn  btn-default">Submit</button>
+  </form>
+  </div>
+</nav>
+
+
+</body>
+</html>
