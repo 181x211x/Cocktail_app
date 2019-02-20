@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from .models import Cocktail
+from .models import Cocktail,Record_Cocktail,Photo
 import csv
 from io import TextIOWrapper, StringIO
-
+from .forms import PhotoForm
+from django.shortcuts import resolve_url, redirect
 
 
 def upload(request):
@@ -29,7 +30,11 @@ def upload(request):
 
 
 def top(request):
-        return render(request, 'top.html')
+        data = Cocktail.objects.all()
+        params = {
+        'cocktail': data,
+        }
+        return render(request, 'top.html',params)
 
 
 def search(request):
@@ -42,3 +47,22 @@ def request(request):
 
 def registration(request):
         return render(request, 'registration.html')
+
+def record(request):
+
+    if request.method == 'GET':
+        return render(request, 'record.html', {
+            'form': PhotoForm(),
+            'photos': Photo.objects.all(),
+        })
+
+    elif request.method == 'POST':
+        form = PhotoForm(request.POST, request.FILES)
+        if not form.is_valid():
+            raise ValueError('invalid form')
+
+        photo = Photo()
+        photo.image = form.cleaned_data['image']
+        photo.save()
+
+        return redirect('/cocktail_app/record/')

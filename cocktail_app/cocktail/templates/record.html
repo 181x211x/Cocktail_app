@@ -13,11 +13,11 @@
 <nav class="navbar  navbar-inverse">
   <div class="container">
   <ul class="nav navbar-nav">
-  <li class="active"><a href="{% url 'top:top' %}">HOME</a></li>
+  <li><a href="{% url 'top:top' %}">HOME</a></li>
   <li><a href="{% url 'top:search' %}">Search</a></li>
   <li><a href="{% url 'top:request' %}">Request</a></li>
   <li><a href="{% url 'top:registration' %}">Registration</a></li>
-  <li><a href="{% url 'top:record' %}">Record</a></li>
+  <li class="active"><a href="{% url 'top:record' %}">Record</a></li>
   </ul>
   <form class="navbar-form navbar-right"  role="search">
   <div  class="form-group">
@@ -28,31 +28,17 @@
   </div>
 </nav>
 
-<table>
-<tr>
-    <th>名前</th>
-    <th>ベース</th>
-    <th>グラス</th>
-    <th>テクニック</th>
-    <th>度数</th>
-    <th>材料１</th>
-    <th>材料２</th>
-    <th>説明</th>
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="投稿" />
+</form>
 
-</tr>
-{% for item in cocktail %}
-<tr>
-    <td>{{ item.name }}</td>
-    <td>{{ item.base }}</td>
-    <td>{{ item.lengh }}</td>
-    <td>{{ item.tech }}</td>
-    <td>{{ item.alc}}</td>
-    <td>{{ item.material1}}</td>
-    <td>{{ item.material2}}</td>
-    <td>{{ item.contents}}</td>
-</tr>
+{% for p in photos %}
+    <div>
+        <img src="{{ p.image.url }}" />
+    </div>
 {% endfor %}
-</table>
 
 </body>
 </html>
