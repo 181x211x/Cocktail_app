@@ -3,7 +3,9 @@ from .models import Cocktail,Record_Cocktail,Photo
 import csv
 from io import TextIOWrapper, StringIO
 from .forms import PhotoForm
+from .forms import SearchForm
 from django.shortcuts import resolve_url, redirect
+from . import forms, models
 
 
 def upload(request):
@@ -38,7 +40,24 @@ def top(request):
 
 
 def search(request):
-        return render(request, 'search.html')
+    data = Cocktail.objects.all()
+    params = {
+    'cocktail_form': forms.SearchForm(),
+    }
+    form = forms.SearchForm(request.POST or None)
+    if form.is_valid():
+        if form.cleaned_data['name'] or form.cleaned_data['material1'] or form.cleaned_data['material2']:
+            params = {
+            'cocktail': Cocktail.objects.filter(name__contains=form.cleaned_data['name'],material1__contains=form.cleaned_data['material1'],material2__contains=form.cleaned_data['material2']),
+            'cocktail_form': forms.SearchForm(),
+            }
+
+        return render(request, 'search.html',params)
+
+
+
+
+    return render(request, 'search.html',params)
 
 
 def request(request):

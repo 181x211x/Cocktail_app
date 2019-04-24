@@ -29,6 +29,91 @@
 </nav>
 
 
+<div class="serch">
+
+  <form method="POST" action="">
+    {% csrf_token %}
+
+
+
+    {{ cocktail_form.name.label }}：
+    {{ cocktail_form.name }}
+    <hr>
+
+    {{ cocktail_form.base.label }}：
+    {{ cocktail_form.base }}
+    <hr>
+
+    {{ cocktail_form.glass.label }}：
+    {{ cocktail_form.glass }}
+    <hr>
+
+    {{ cocktail_form.tech.label }}：
+    {{ cocktail_form.tech }}
+    <hr>
+
+    {{ cocktail_form.alc.label }}：
+    {{ cocktail_form.alc }}
+    <hr>
+
+    {{ cocktail_form.material1.label }}：
+    {{ cocktail_form.material1 }}
+    <hr>
+
+    {{ cocktail_form.material2.label }}：
+    {{ cocktail_form.material2 }}
+    <hr>
+
+    <input type="submit" value="検索">
+  </form>
+</div>
+
+
+
+
+<hr>
+
+
+      {% block body %}
+    <form method="post" action="">
+      {% csrf_token %}
+      <table border="1">
+        <thead>
+          <tr>
+            <th>名前</th>
+            <th>ベース</th>
+            <th>グラス</th>
+            <th>テクニック</th>
+            <th>度数</th>
+            <th>材料１</th>
+            <th>材料２</th>
+            <th></th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cocktail %}
+          <tr>
+              <td>{{ item.name }}</td>
+              <td>{{ item.base }}</td>
+              <td>{{ item.lengh }}</td>
+              <td>{{ item.tech }}</td>
+              <td>{{ item.alc}}</td>
+              <td>{{ item.material1}}</td>
+              <td>{{ item.material2}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </form>
+  {% endblock %}
+
+
+
+
+
+
 
 </body>
 </html>
