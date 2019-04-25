@@ -6,6 +6,7 @@ from .forms import PhotoForm
 from .forms import SearchForm
 from django.shortcuts import resolve_url, redirect
 from . import forms, models
+import logging
 
 
 def upload(request):
@@ -42,15 +43,53 @@ def top(request):
 def search(request):
     data = Cocktail.objects.all()
     params = {
+    'cocktail': Cocktail.objects.all(),
     'cocktail_form': forms.SearchForm(),
     }
     form = forms.SearchForm(request.POST or None)
+
     if form.is_valid():
-        if form.cleaned_data['name'] or form.cleaned_data['material1'] or form.cleaned_data['material2']:
+        print(request.POST)
+        name = request.POST.getlist('name')
+        base = form.cleaned_data['base']
+        glass = form.cleaned_data['glass']
+        tech = form.cleaned_data['tech']
+        taste = form.cleaned_data['taste']
+        alc = form.cleaned_data['alc']
+        material1 = request.POST.getlist('material1')
+        material2 = request.POST.getlist('material2')
+
+        if name == None:
+            name = ['']
+        if form.cleaned_data['base'] == "全て":
+            base = ['']
+        if form.cleaned_data['glass'] == "全て":
+            glass = ['']
+        if form.cleaned_data['tech'] == "全て":
+            tech = ['']
+        if form.cleaned_data['taste'] == "全て":
+            taste = ['']
+        if form.cleaned_data['material1'] == None:
+            material1 = ['']
+        if form.cleaned_data['material2'] == None:
+            material2 = ['']
+        if form.cleaned_data['alc'] == None:
+            alc = 100
+
+        print(name)
+        print(base)
+        print(glass)
+        print(tech)
+        print(alc)
+        print(material1)
+        print(material2)
+
+        if name or base or glass or tech or alc or material1 or material2:
             params = {
-            'cocktail': Cocktail.objects.filter(name__contains=form.cleaned_data['name'],material1__contains=form.cleaned_data['material1'],material2__contains=form.cleaned_data['material2']),
+            'cocktail': Cocktail.objects.filter(name__contains=name[0],material1__contains=material1[0],material2__contains=material2[0],alc__lte=alc,base__contains=base[0],taste__contains=taste[0],lengh__contains=glass[0],tech__contains=tech[0]),
             'cocktail_form': forms.SearchForm(),
             }
+
 
         return render(request, 'search.html',params)
 

@@ -2,7 +2,7 @@ from django import forms
 from datetime import datetime
 
 EMPTY_CHOICES = (
-    ('全てのカクテル', '全てのカクテル'),
+    ('全て', '全て'),
 )
 
 BASE_CHOICES = (
@@ -25,6 +25,12 @@ TECH_CHOICES = (
     ('ビルド', 'ビルド'),
 )
 
+TASTE_CHOICES = (
+    ('甘', '甘'),
+    ('中', '中'),
+    ('辛', '辛'),
+)
+
 
 
 
@@ -45,23 +51,26 @@ class SearchForm(forms.Form):
 
     base = forms.ChoiceField(
         label='ベース',
-        widget=forms.CheckboxSelectMultiple,
-        choices=BASE_CHOICES,
+        widget=forms.RadioSelect,
+        choices=EMPTY_CHOICES + BASE_CHOICES,
         required=False,
+        initial=['全て'],
     )
 
     glass = forms.ChoiceField(
         label='グラス',
-        widget=forms.CheckboxSelectMultiple,
-        choices=GLASS_CHOICES,
+        widget=forms.RadioSelect,
+        choices=EMPTY_CHOICES + GLASS_CHOICES,
         required=False,
+        initial=['全て'],
     )
 
     tech = forms.ChoiceField(
         label='テクニック',
-        widget=forms.CheckboxSelectMultiple,
-        choices=TECH_CHOICES,
+        widget=forms.RadioSelect,
+        choices=EMPTY_CHOICES + TECH_CHOICES,
         required=False,
+        initial=['全て'],
     )
 
     alc = forms.IntegerField(
@@ -69,6 +78,14 @@ class SearchForm(forms.Form):
         min_value=0,
         max_value=100,
         required=False,
+    )
+
+    taste = forms.ChoiceField(
+        label='テイスト',
+        widget=forms.RadioSelect,
+        choices=EMPTY_CHOICES + TASTE_CHOICES,
+        required=False,
+        initial=['全て'],
     )
 
     material1 = forms.CharField(
