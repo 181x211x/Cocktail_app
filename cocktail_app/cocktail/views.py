@@ -4,6 +4,7 @@ import csv
 from io import TextIOWrapper, StringIO
 from .forms import PhotoForm
 from .forms import SearchForm
+from .forms import RequestForm
 from django.shortcuts import resolve_url, redirect
 from . import forms, models
 import logging
@@ -93,14 +94,51 @@ def search(request):
 
         return render(request, 'search.html',params)
 
-
-
-
     return render(request, 'search.html',params)
 
 
 def request(request):
-        return render(request, 'request.html')
+
+    data = Cocktail.objects.all()
+    params = {
+    'cocktail_form': forms.RequestForm(),
+    }
+    form = forms.RequestForm(request.POST or None)
+
+    if form.is_valid():
+        print(request.POST)
+        taste = form.cleaned_data['taste']
+        alc = form.cleaned_data['alc']
+
+        if form.cleaned_data['taste'] == "全て":
+            taste = ['']
+        if form.cleaned_data['alc'] == "全て":
+            max_alc = 100
+            min_alc = 0
+        elif form.cleaned_data['alc'] == "低め":
+            max_alc = 16
+            min_alc = 0
+        elif form.cleaned_data['alc'] == "そこそこ":
+            max_alc = 30
+            min_alc = 17
+        elif form.cleaned_data['alc'] == "高め":
+            max_alc = 50
+            min_alc = 31
+
+
+        print(taste)
+        print(alc)
+
+        if taste or alc:
+            params = {
+            'cocktail': Cocktail.objects.filter(alc__lte=max_alc,alc__gte=min_alc,taste__contains=taste[0]).order_by('?')[:3],
+            'cocktail_form': forms.RequestForm(),
+            }
+
+
+        return render(request, 'request.html',params)
+
+    return render(request, 'request.html',params)
 
 
 def registration(request):

@@ -31,6 +31,13 @@ TASTE_CHOICES = (
     ('辛', '辛'),
 )
 
+ALC_CHOICES = (
+    ('低め', '低め'),
+    ('そこそこ', 'そこそこ'),
+    ('高め', '高め'),
+)
+
+
 
 
 
@@ -102,4 +109,23 @@ class SearchForm(forms.Form):
         required=False,
         widget=forms.TextInput(),
 
+    )
+
+
+class RequestForm(forms.Form):
+
+    taste = forms.ChoiceField(
+        label='テイスト',
+        widget=forms.RadioSelect,
+        choices=EMPTY_CHOICES + TASTE_CHOICES,
+        required=False,
+        initial=['全て'],
+    )
+
+    alc = forms.ChoiceField(
+        label='度数',
+        widget=forms.RadioSelect,
+        choices=EMPTY_CHOICES + ALC_CHOICES,
+        required=False,
+        initial=['全て'],
     )
