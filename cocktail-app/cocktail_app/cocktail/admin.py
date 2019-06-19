@@ -13,4 +13,4 @@ admin.site.register(Cocktail, CocktailAdmin)
 class PhotoAdmin(admin.ModelAdmin):
     fields = ['image']
 
-admin.site.register(Photo, CocktailAdmin)
+admin.site.register(Photo)

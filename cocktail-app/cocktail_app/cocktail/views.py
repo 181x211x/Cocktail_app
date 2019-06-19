@@ -5,9 +5,16 @@ from io import TextIOWrapper, StringIO
 from .forms import PhotoForm
 from .forms import SearchForm
 from .forms import RequestForm
+from .forms import RegistrationForm
 from django.shortcuts import resolve_url, redirect
 from . import forms, models
 import logging
+from django.views.generic.edit import CreateView
+from django.shortcuts import redirect
+from django.template import RequestContext
+from rest_framework import viewsets
+from django.http.response import HttpResponse
+
 
 
 def upload(request):
@@ -143,7 +150,22 @@ def request(request):
 
 
 def registration(request):
-        return render(request, 'registration.html')
+    params = {
+    'cocktail_form': forms.RegistrationForm(),
+    }
+
+    form = RegistrationForm(request.POST, request.FILES)
+
+    if request.method == 'POST':
+        if not form.is_valid():
+            raise ValueError('invalid form')
+        if form.is_valid():
+            models.Cocktail.objects.create(**form.cleaned_data)          
+
+        return render(request, 'registration.html',params)
+
+
+    return render(request, 'registration.html',params)
 
 def record(request):
 
