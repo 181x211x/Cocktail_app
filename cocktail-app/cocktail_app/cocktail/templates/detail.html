@@ -28,20 +28,38 @@
   </div>
 </nav>
 
+
+<h2>カクテル詳細</h2>
+
 <table>
 <tr>
     <th>名前</th>
-  
+    <th>ベース</th>
+    <th>グラス</th>
+    <th>テクニック</th>
+    <th>度数</th>
+    <th>テイスト</th>
+    <th>材料１</th>
+    <th>材料２</th>
+    <th>説明</th>
+    <th>写真</th>
 
 </tr>
-{% for item in cocktail %}
+
 <tr>
-    <td><a href="detail/{{ item.id }}/">{{ item.name }}</a></td>
-
-    <td><img src="../../media/{{ item.image }}" width="300" height="200"/></td>
-    <!-- <td>{{ item.image}}</td> -->
+    <td>{{ cocktail.name }}</td>
+    <td>{{ cocktail.base }}</td>
+    <td>{{ cocktail.lengh }}</td>
+    <td>{{ cocktail.tech }}</td>
+    <td>{{ cocktail.alc}}</td>
+    <td>{{ cocktail.taste}}</td>
+    <td>{{ cocktail.material1}}</td>
+    <td>{{ cocktail.material2}}</td>
+    <td>{{ cocktail.contents}}</td>
+    <td><img src="{{ cocktail.image.url }}" width="300" height="200"/></td>
+    <!-- <td>{{ cocktail.image}}</td> -->
 </tr>
-{% endfor %}
+
 </table>
 
 </body>

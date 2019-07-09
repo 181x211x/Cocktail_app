@@ -48,6 +48,13 @@ def top(request):
         }
         return render(request, 'top.html',params)
 
+def detail(request,cocktail_id):
+    data = Cocktail.objects.get(pk=cocktail_id)
+    params = {
+    'cocktail': data,
+    }
+    return render(request, 'detail.html',params)
+
 
 def search(request):
     data = Cocktail.objects.all()
@@ -160,7 +167,7 @@ def registration(request):
         if not form.is_valid():
             raise ValueError('invalid form')
         if form.is_valid():
-            models.Cocktail.objects.create(**form.cleaned_data)          
+            models.Cocktail.objects.create(**form.cleaned_data)
 
         return render(request, 'registration.html',params)
 

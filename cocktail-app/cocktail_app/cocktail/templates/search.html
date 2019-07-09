@@ -85,28 +85,15 @@
         <thead>
           <tr>
             <th>名前</th>
-            <th>ベース</th>
-            <th>グラス</th>
-            <th>テクニック</th>
-            <th>度数</th>
-            <th>テイスト</th>
-            <th>材料１</th>
-            <th>材料２</th>
-            <th></th>
+            
 
           </tr>
         </thead>
         <tbody>
           {% for item in cocktail %}
           <tr>
-              <td>{{ item.name }}</td>
-              <td>{{ item.base }}</td>
-              <td>{{ item.lengh }}</td>
-              <td>{{ item.tech }}</td>
-              <td>{{ item.alc}}</td>
-              <td>{{ item.taste}}</td>
-              <td>{{ item.material1}}</td>
-              <td>{{ item.material2}}</td>
+              <td><a href="detail/{{ item.id }}/">{{ item.name }}</a></td>
+
           </tr>
           {% endfor %}
         </tbody>

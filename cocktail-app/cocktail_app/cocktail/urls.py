@@ -22,8 +22,11 @@ from django.conf.urls import url,include
 urlpatterns = [
      path('upload/', views.upload, name='upload'),
      path('top/', views.top, name='top'),
+     path('top/detail/<int:cocktail_id>/', views.detail, name='detail'),
      path('search/', views.search, name='search'),
      path('request/', views.request, name='request'),
      path('registration/', views.registration, name='registration'),
      path('record/', views.record, name='record'),
+     path('search/detail/<int:cocktail_id>/', views.detail, name='detail'),
+     path('registration/detail/<int:cocktail_id>/', views.detail, name='detail'),
 ]
